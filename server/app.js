@@ -2,9 +2,12 @@ require('dotenv').config()
 var cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose');
+var cookieParser = require('cookie-parser')
+const authenticate = require("./middleware/authenticate");
 const app = express()
 // app.use(cors());
 app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser())
 // mongoose connecting line
 require("./db/connection");
 // const User = require("./models/user");
@@ -19,13 +22,16 @@ app.get('/', function (req, res) {
   res.send("Home Page")
 })
 
-// app.get('/about', function (req, res) {
-//     res.send("About Page")
-// })
+
 
 app.get('/contact', function (req, res) {
-  res.cookie("Test", "Thapa");
+  // res.cookie("Test", "Thapa");
     res.send("Contact Page")
+})
+
+app.get('/about', authenticate, function (req, res) {
+    // console.log("About Page")
+    res.send(req.rootUser);
 })
 
 // app.get('/signin', function (req, res) {

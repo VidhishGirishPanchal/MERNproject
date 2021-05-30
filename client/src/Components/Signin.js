@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import man_laptop from "../img/man_laptop.svg"
 import {NavLink, useHistory} from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Signin() {  
@@ -18,7 +18,8 @@ function Signin() {
         headers:{
             "Content-Type" : "application/json"
         },
-        withCredentials: true, credentials: 'include',
+        withCredentials: true, 
+        credentials: 'include',
         body: JSON.stringify({
             email, password
         })
