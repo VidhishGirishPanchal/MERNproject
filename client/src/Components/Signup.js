@@ -54,6 +54,7 @@ function Signup() {
                                 <input 
                                 value={user.name}
                                 onChange={handleChange}
+                                autoComplete="off"
                                 name="name"
                                 type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder= "Your Name" />
                             </div>
@@ -61,6 +62,7 @@ function Signup() {
                                 <input 
                                 value={user.email}
                                 onChange={handleChange}
+                                autoComplete="off"
                                 name="email"
                                 type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" />
                             </div>
@@ -68,6 +70,7 @@ function Signup() {
                                 <input 
                                 value={user.phone}
                                 onChange={handleChange}
+                                autoComplete="off"
                                 name="phone"
                                 type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Mobile Number" />
                             </div>
@@ -75,6 +78,7 @@ function Signup() {
                                 <input 
                                 value={user.work}
                                 onChange={handleChange}
+                                autoComplete="off"
                                 name="work"
                                 type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your Profession" />
                             </div>
@@ -82,6 +86,7 @@ function Signup() {
                                 <input 
                                 value={user.password}
                                 onChange={handleChange}
+                                autoComplete="off"
                                 name="password"
                                 type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
                             </div>
@@ -89,6 +94,7 @@ function Signup() {
                                 <input 
                                 value={user.cpassword}
                                 onChange={handleChange}
+                                autoComplete="off"
                                 name="cpassword"
                                 type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" />
                             </div>

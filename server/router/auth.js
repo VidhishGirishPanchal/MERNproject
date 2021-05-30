@@ -55,11 +55,15 @@ router.post("/signin", async (req, res)=>{
 
             const token = await foundUser.generateAuthToken();
             console.log("Generated token for " + foundUser.name + " : " + token);
-
-            res.cookie("jwtoken", token, {
-                expires: new Date(Date.now() + 25892000000),
-                httpOnly: true
-            })
+            // console.log("before cookie");
+            
+                res.cookie("jwtoken", token, {
+                    expires: new Date(Date.now() + 25892000000),
+                    httpOnly: true
+                });
+            
+            
+            // console.log("after cookie");
 
             if (!isMatch) {
                 res.status(400).json({error:"Invalid Credentials"})

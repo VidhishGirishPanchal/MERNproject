@@ -3,7 +3,8 @@ var cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose');
 const app = express()
-app.use(cors());
+// app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 // mongoose connecting line
 require("./db/connection");
 // const User = require("./models/user");
@@ -23,7 +24,7 @@ app.get('/', function (req, res) {
 // })
 
 app.get('/contact', function (req, res) {
-  // res.cookie("Test", "Thapa")
+  res.cookie("Test", "Thapa");
     res.send("Contact Page")
 })
 
