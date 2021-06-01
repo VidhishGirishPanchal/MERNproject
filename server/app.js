@@ -30,10 +30,16 @@ app.get('/contact', function (req, res) {
 })
 
 app.get('/about', authenticate, function (req, res) {
-    // console.log("About Page")
+    console.log("About Page")
     res.send(req.rootUser);
 })
 
+
+// Authorization for contact and home page
+// app.get('/contact', authenticate, function (req, res) {
+//   console.log("Authorization for contact and home page")
+//   res.send(req.rootUser);
+// })
 // app.get('/signin', function (req, res) {
 //     res.send("Signin Page")
 // })

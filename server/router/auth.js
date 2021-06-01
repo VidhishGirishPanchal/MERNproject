@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const authenticate = require("../middleware/authenticate");
 
 require("../db/connection");
 const User = require("../models/user")
@@ -86,6 +87,10 @@ router.post("/signin", async (req, res)=>{
    }
 })
 
+router.get('/contact', authenticate, function (req, res) {
+    console.log("Authorization for contact and home page")
+    res.send(req.rootUser);
+  })
 
 // router.post("/signin", (req, res)=>{
 //     const {email, password} = req.body;

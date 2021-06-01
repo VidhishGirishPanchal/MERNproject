@@ -1,6 +1,41 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import {useHistory} from "react-router-dom"
 
 function Contact() {
+
+  const history = useHistory();
+  const [userData, setUserData] = useState({});
+    const callContactPage = async ()=>{
+        try {
+          const res = await fetch("http://localhost:5000/contact", {
+            method: "GET",
+            headers:{
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            withCredentials: true,
+            credentials: 'include'
+          })
+          const data = await res.json();
+          console.log(data);
+          setUserData(data);
+          if (!res.status===200) {
+            const error = new Error(res.error)
+            throw(error)
+          }else{
+            console.log("ContactPage Successful");
+          }
+        } catch (err) {
+          console.log(err);
+          // JSON.parse(JSON.stringify(err));
+          // window.alert("Please Login to view this page");
+          history.push("/signin");
+        }
+    }
+    useEffect(() => {
+      callContactPage();
+    }, [])
+
     return (
         <>
           <div className="contact_row_div">
@@ -40,17 +75,17 @@ function Contact() {
                 <div className="row" style={{padding: "5%"}}>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">    
-                                <input type="text" class="form-control" placeholder="Your Name" />
+                                <input type="text" value={userData.name} class="form-control" placeholder="Your Name" />
                 </div>
                 </div>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">  
-                                <input type="email" class="form-control" placeholder="Your Email" />
+                                <input type="email" value={userData.email} class="form-control" placeholder="Your Email" />
                 </div>
                 </div>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">       
-                                <input type="text" class="form-control" placeholder="Your Number" />
+                                <input type="text" value={userData.phone} class="form-control" placeholder="Your Number" />
                 </div>
                 </div>
                 </div>
