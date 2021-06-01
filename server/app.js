@@ -18,10 +18,6 @@ app.use(require("./router/auth"));
 const PORT = process.env.PORT
 
  
-app.get('/', function (req, res) {
-  res.send("Home Page")
-})
-
 
 
 app.get('/contact', function (req, res) {
@@ -33,6 +29,12 @@ app.get('/about', authenticate, function (req, res) {
     console.log("About Page")
     res.send(req.rootUser);
 })
+
+app.get('/', authenticate, function (req, res) {
+  console.log("home page")
+  res.send(req.rootUser);
+})
+
 
 
 // Authorization for contact and home page

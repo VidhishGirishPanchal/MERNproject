@@ -7,9 +7,9 @@ const authenticate = require("../middleware/authenticate");
 require("../db/connection");
 const User = require("../models/user")
 
-router.get("/", (req, res)=>{
-    res.send("express router!")
-})
+// router.get("/", (req, res)=>{
+//     res.send("express router!")
+// })
 
 router.post("/signup", (req, res)=>{
     const {name, email, phone, work, password, cpassword} = req.body;
@@ -90,7 +90,13 @@ router.post("/signin", async (req, res)=>{
 router.get('/contact', authenticate, function (req, res) {
     console.log("Authorization for contact and home page")
     res.send(req.rootUser);
-  })
+})
+
+  router.get('/', authenticate, function (req, res) {
+    console.log("Authorization for contact and home page")
+    res.send(req.rootUser);
+})
+
 
 // router.post("/signin", (req, res)=>{
 //     const {email, password} = req.body;
