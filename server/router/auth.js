@@ -88,13 +88,40 @@ router.post("/signin", async (req, res)=>{
 })
 
 router.get('/contact', authenticate, function (req, res) {
-    console.log("Authorization for contact and home page")
+    // console.log("Authorization for contact and home page")
     res.send(req.rootUser);
 })
 
+router.post("/contact", async (req, res)=>{
+        try {
+            const {name, email, phone, message} = req.body;
+            if(!name || !email | !phone || !message){
+                console.log("Please enter all the fields of contact form.");
+                res.status(400).json({error:"Please enter all the fields of contact form."})
+            }
+
+            const userContact = await User.findOne({_id: req.userID});
+            if(userContact){
+                const userMessage = await userContact.addMessage(name, email, phone, message)
+                await userMessage.save();
+                // window.alert("Message sent!")
+                res.status(201).json({message: "user Contact successful"});
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+})
+
   router.get('/', authenticate, function (req, res) {
-    console.log("Authorization for contact and home page")
+    console.log("Authorization home page")
     res.send(req.rootUser);
+})
+
+router.get('/logout', (req, res)=> {
+    console.log("Logout page");
+    res.clearCookie("jwtoken", {path: "/"});
+    res.status(200).send("User Logged out successfully.");
 })
 
 

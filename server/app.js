@@ -20,10 +20,10 @@ const PORT = process.env.PORT
  
 
 
-app.get('/contact', function (req, res) {
-  // res.cookie("Test", "Thapa");
-    res.send("Contact Page")
-})
+// app.get('/contact', function (req, res) {
+//   // res.cookie("Test", "Thapa");
+//     res.send("Contact Page")
+// })
 
 app.get('/about', authenticate, function (req, res) {
     console.log("About Page")

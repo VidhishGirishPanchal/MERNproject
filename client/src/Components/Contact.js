@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom"
 function Contact() {
 
   const history = useHistory();
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({name:"", email:"", phone:"", message:""});
     const callContactPage = async ()=>{
         try {
           const res = await fetch("http://localhost:5000/contact", {
@@ -18,7 +18,7 @@ function Contact() {
           })
           const data = await res.json();
           console.log(data);
-          setUserData(data);
+          setUserData({...userData, name:data.name, email: data.email, phone: data.phone});
           if (!res.status===200) {
             const error = new Error(res.error)
             throw(error)
@@ -35,6 +35,34 @@ function Contact() {
     useEffect(() => {
       callContactPage();
     }, [])
+
+    const handleChange = (e)=>{
+        const name = e.target.name;
+        const value = e.target.value;
+        setUserData({...userData, [name]:value});
+    }
+
+    const SendMessage = async (e)=>{
+      e.preventDefault();
+      const {name, email, phone, message} = userData
+      const res = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        withCredentials: true,
+        credentials: 'include',
+        body: JSON.stringify({name, email, phone, message})
+      });
+      const data = await res.json()
+      if (!data || res.status === 400) {
+        console.log("Message not sent");
+      } else {
+        window.alert("Message Sent!")
+        setUserData({...userData, message:""})
+      }
+    }
 
     return (
         <>
@@ -68,37 +96,39 @@ function Contact() {
                 </div>
           </div> 
           {/* big div */}
+
           <div className="contact_div">
                 <h2 style={{marginLeft:"10%", paddingTop:"30px", paddingBottom: "10px"}}>Get in Touch</h2>
                 
-                <form method="" className="contact_page_form">
+                <form method="POST" className="contact_page_form">
                 <div className="row" style={{padding: "5%"}}>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">    
-                                <input type="text" value={userData.name} class="form-control" placeholder="Your Name" />
+                                <input onChange={handleChange} name="name" type="text" value={userData.name} class="form-control" placeholder="Your Name" />
                 </div>
                 </div>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">  
-                                <input type="email" value={userData.email} class="form-control" placeholder="Your Email" />
+                                <input onChange={handleChange} name="phone" type="email" value={userData.email} class="form-control" placeholder="Your Email" />
                 </div>
                 </div>
                 <div className="col-lg-4 col-md-6 col-sm-12">
                 <div class="form-group">       
-                                <input type="text" value={userData.phone} class="form-control" placeholder="Your Number" />
+                                <input onChange={handleChange} name="email" type="text" value={userData.phone} class="form-control" placeholder="Your Number" />
                 </div>
                 </div>
                 </div>
                 <div class="form-group" style={{paddingLeft: "5%", paddingRight: "5%", paddingBottom:"5%", marginTop:"-20px"}}>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea>
+                                <textarea onChange={handleChange} name="message" class="form-control" value={userData.message} id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea>
                 </div>
                 <div className="contact_register_btn">
-                <button className="btn btn-primary">Send Message</button>
+                <button onClick={SendMessage} className="btn btn-primary">Send Message</button>
                 </div>
                 </form>
                
                 
           </div>
+         
         </>
     )
 }

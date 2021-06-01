@@ -6,6 +6,7 @@ import Contact from "./Components/Contact"
 import Signin from "./Components/Signin"
 import Signup from "./Components/Signup"
 import Errorpage from "./Components/Errorpage"
+import Logout from "./Components/Logout"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
               </Route>
               <Route exact path="/signup">
                     <Signup />
+              </Route>
+              <Route  exact path="/logout">
+                    <Logout />
               </Route>
               <Route>
                     <Errorpage />
