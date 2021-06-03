@@ -1,7 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useContext} from 'react'
 import { useHistory } from 'react-router'
+import {UserContext} from "../App"
 
 function Logout() {
+    const {state, dispatch} = useContext(UserContext)
     const history = useHistory();
     useEffect(() => {
         fetch("http://localhost:5000/logout", {
@@ -14,7 +16,9 @@ function Logout() {
             credentials: 'include'
         })
         .then((res)=>{
+            dispatch({type:"USER", payload:false})
             history.push("/signin", {replace:true})
+            // window.alert("Logged out successfully")
             if(!res.status === 200){
                 const error = new error(res.error);
                 throw error;

@@ -98,22 +98,24 @@ router.post("/contact", async (req, res)=>{
             if(!name || !email | !phone || !message){
                 console.log("Please enter all the fields of contact form.");
                 res.status(400).json({error:"Please enter all the fields of contact form."})
+            }else{
+                const userContact = await User.findOne({_id: req.userID});
+                if(userContact){
+                    const userMessage = await userContact.addMessage(name, email, phone, message)
+                    await userMessage.save();
+                    // window.alert("Message sent!")
+                    res.status(201).json({message: "Message sent successfully"});
+                }
             }
 
-            const userContact = await User.findOne({_id: req.userID});
-            if(userContact){
-                const userMessage = await userContact.addMessage(name, email, phone, message)
-                await userMessage.save();
-                // window.alert("Message sent!")
-                res.status(201).json({message: "user Contact successful"});
-            }
+           
 
         } catch (err) {
             console.log(err);
         }
 })
 
-  router.get('/', authenticate, function (req, res) {
+router.get('/', authenticate, function (req, res) {
     console.log("Authorization home page")
     res.send(req.rootUser);
 })

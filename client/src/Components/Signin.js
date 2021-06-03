@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import man_laptop from "../img/man_laptop.svg"
 import {NavLink, useHistory} from "react-router-dom";
 // import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {UserContext} from "../App"
 
 function Signin() {  
+
+    const {state, dispatch} = useContext(UserContext)
+
     const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,6 +33,7 @@ function Signin() {
         if(res.status===400 || !data){
             window.alert("Invalid Credentials")
         }else{
+            dispatch({type:"USER", payload:true})
             window.alert("Login Successful");
             // const notiftoast =()=> toast.success('Login Successful', {
             //     position: "top-right",
